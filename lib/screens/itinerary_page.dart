@@ -120,7 +120,7 @@ class FlutterMapView extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.red,
+                    color: Colors.blue,
                   ),
                 ),
               ),
