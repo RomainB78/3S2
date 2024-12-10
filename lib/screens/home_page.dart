@@ -112,7 +112,7 @@ class _HomePageState extends State<HomePage> {
                         style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold, // Texte en gras
-                          color: Color.fromARGB(255, 51, 127, 136), // Couleur principale
+                          color: Color.fromARGB(255, 255, 255, 255), // Couleur principale
                           shadows: [
                             Shadow(
                               offset: Offset(2.0, 2.0), // Décalage de l'ombre
