@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:isar/isar.dart';
-import 'package:path_provider/path_provider.dart';
 import 'package:swipezone/domains/location_manager.dart';
 import 'package:swipezone/domains/locations_usecase.dart';
 import 'package:swipezone/screens/widgets/location_card.dart';
@@ -16,14 +14,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  @override
-  void initState() {
-    super.initState();
-  }
-
-  void createDatabase() async {
-
-  }
+  final LocationManager _locationManager = LocationManager();
 
   @override
   Widget build(BuildContext context) {
@@ -40,11 +31,9 @@ class _HomePageState extends State<HomePage> {
             if (data == null || data.isEmpty) {
               return const Text("No data");
             }
-
-            LocationManager().locations = data;
-
+            _locationManager.locations = data;
             return ListView(children: [
-              LocationCard(location: data[LocationManager().currentIndex]),
+              LocationCard(location: _locationManager.locations[_locationManager.currentIndex]),
               Center(
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -52,7 +41,7 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          LocationManager().Idontwant();
+                          _locationManager.Idontwant();
                         });
                       },
                       child: const Text("Nope"),
@@ -60,16 +49,16 @@ class _HomePageState extends State<HomePage> {
                     ElevatedButton(
                       onPressed: () {
                         setState(() {
-                          LocationManager().Iwant();
+                          _locationManager.Iwant();
                         });
                       },
                       child: const Text("Yep"),
                     ),
                     Text(
-                        "Don't like: ${LocationManager().unwantedLocations.length}",
+                        "Don't like: ${_locationManager.unwantedLocations.length}",
                         style:
                             const TextStyle(color: Colors.red, fontSize: 20)),
-                    Text("Like: ${LocationManager().filters.length}",
+                    Text("Like: ${_locationManager.filters.length}",
                         style:
                             const TextStyle(color: Colors.green, fontSize: 20)),
                   ],
@@ -84,7 +73,7 @@ class _HomePageState extends State<HomePage> {
               )
             ]);
           } else {
-            return const CircularProgressIndicator();
+            return const Center(child: CircularProgressIndicator());
           }
         },
       ),
@@ -96,3 +85,4 @@ class _HomePageState extends State<HomePage> {
     );
   }
 }
+
