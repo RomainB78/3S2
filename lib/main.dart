@@ -7,7 +7,7 @@ import 'package:swipezone/screens/select_page.dart';
 void main() {
   runApp(
     MaterialApp.router(
-      routerConfig: _router,
+      routerConfig: _router, 
     ),
   );
 }
