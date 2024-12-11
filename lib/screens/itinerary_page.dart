@@ -16,88 +16,50 @@ class ItineraryPage extends StatefulWidget {
 class _ItineraryPageState extends State<ItineraryPage> {
   final MapController _mapController = MapController();
   double _currentZoom = 13.0;
-
   LatLng? currentPosition;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _recenterToParis();
-    });
+    WidgetsBinding.instance.addPostFrameCallback((_) => _recenterToParis());
   }
 
   @override
   Widget build(BuildContext context) {
-    List<Location> itinerary = LocationManager().itinerary;
+    final List<Location> itinerary = LocationManager().itinerary;
 
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: Text(widget.title, style: TextStyle(fontWeight: FontWeight.bold)),
+        elevation: 0,
       ),
       body: Column(
         children: [
           Expanded(
             flex: 2,
-            child: Container(
-              height: 200,
-              child: ListView.builder(
-                itemCount: itinerary.length,
-                itemBuilder: (context, index) {
-                  Location location = itinerary[index];
-                  return ListTile(
-                    leading: Text('${index + 1}.'),
-                    title: Text(location.nom),
-                    subtitle: Text(location.localization.adress ?? "No address provided"),
-                  );
-                },
-              ),
-            ),
+            child: ItineraryListView(itinerary: itinerary),
           ),
-          SizedBox(height: 16),
           Expanded(
             flex: 5,
             child: Stack(
               children: [
-                FlutterMapView(
+                EnhancedFlutterMapView(
                   locations: itinerary,
                   mapController: _mapController,
                 ),
                 Positioned(
                   right: 16,
                   bottom: 16,
-                  child: Column(
-                    children: [
-                      FloatingActionButton(
-                        heroTag: "zoomIn",
-                        child: Icon(Icons.add),
-                        onPressed: () => _zoom(true),
-                      ),
-                      SizedBox(height: 8),
-                      FloatingActionButton(
-                        heroTag: "zoomOut",
-                        child: Icon(Icons.remove),
-                        onPressed: () => _zoom(false),
-                      ),
-                    ],
+                  child: ZoomControls(
+                    onZoomIn: () => _zoom(true),
+                    onZoomOut: () => _zoom(false),
                   ),
                 ),
               ],
             ),
           ),
-          Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.my_location),
-                  onPressed: _recenterToParis,
-                ),
-              ],
-            ),
-          ),
+          RecenterButton(onPressed: _recenterToParis),
         ],
       ),
     );
@@ -105,26 +67,47 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   void _recenterToParis() {
     _mapController.move(LatLng(48.870215, 2.328324), 12.5);
-    setState(() {
-      _currentZoom = 12.5;
-    });
+    setState(() => _currentZoom = 12.5);
   }
 
   void _zoom(bool zoomIn) {
-    double newZoom = zoomIn ? _currentZoom + 1 : _currentZoom - 1;
-    newZoom = newZoom.clamp(1.0, 18.0); // Limiter le zoom entre 1 et 18
-    setState(() {
-      _currentZoom = newZoom;
-    });
+    double newZoom = (zoomIn ? _currentZoom + 1 : _currentZoom - 1).clamp(1.0, 18.0);
+    setState(() => _currentZoom = newZoom);
     _mapController.move(_mapController.camera.center, newZoom);
   }
 }
 
-class FlutterMapView extends StatelessWidget {
+class ItineraryListView extends StatelessWidget {
+  final List<Location> itinerary;
+
+  const ItineraryListView({Key? key, required this.itinerary}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView.separated(
+      padding: EdgeInsets.symmetric(vertical: 8),
+      itemCount: itinerary.length,
+      separatorBuilder: (context, index) => Divider(height: 1),
+      itemBuilder: (context, index) {
+        Location location = itinerary[index];
+        return ListTile(
+          leading: CircleAvatar(
+            child: Text('${index + 1}', style: TextStyle(fontWeight: FontWeight.bold)),
+            backgroundColor: Theme.of(context).colorScheme.secondary,
+          ),
+          title: Text(location.nom, style: TextStyle(fontWeight: FontWeight.bold)),
+          subtitle: Text(location.localization.adress ?? "Adresse non disponible"),
+        );
+      },
+    );
+  }
+}
+
+class EnhancedFlutterMapView extends StatelessWidget {
   final List<Location> locations;
   final MapController mapController;
 
-  const FlutterMapView({Key? key, required this.locations, required this.mapController}) : super(key: key);
+  const EnhancedFlutterMapView({Key? key, required this.locations, required this.mapController}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -155,29 +138,104 @@ class FlutterMapView extends StatelessWidget {
           markers: locations.asMap().entries.map((entry) {
             int index = entry.key;
             Location location = entry.value;
-
             return Marker(
               point: LatLng(
                 location.localization.lat ?? 0.0,
                 location.localization.lng ?? 0.0,
               ),
-              width: 80.0,
-              height: 80.0,
-              child: Container(
-                alignment: Alignment.center,
-                child: Text(
-                  '${index + 1}',
-                  style: TextStyle(
-                    fontSize: 30.0,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.red,
-                  ),
-                ),
+              width: 40.0,
+              height: 40.0,
+              child: CustomPaint(
+                painter: MarkerPainter(index + 1),
               ),
             );
           }).toList(),
         ),
       ],
+    );
+  }
+}
+
+class MarkerPainter extends CustomPainter {
+  final int number;
+
+  MarkerPainter(this.number);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final paint = Paint()
+      ..color = Colors.red
+      ..style = PaintingStyle.fill;
+
+    canvas.drawCircle(Offset(size.width / 2, size.height / 2), size.width / 2, paint);
+
+    final textPainter = TextPainter(
+      text: TextSpan(
+        text: number.toString(),
+        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+      ),
+      textDirection: TextDirection.ltr,
+    );
+    textPainter.layout();
+    textPainter.paint(
+      canvas,
+      Offset(
+        (size.width - textPainter.width) / 2,
+        (size.height - textPainter.height) / 2,
+      ),
+    );
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) => false;
+}
+
+class ZoomControls extends StatelessWidget {
+  final VoidCallback onZoomIn;
+  final VoidCallback onZoomOut;
+
+  const ZoomControls({Key? key, required this.onZoomIn, required this.onZoomOut}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        FloatingActionButton(
+          heroTag: "zoomIn",
+          child: Icon(Icons.add),
+          onPressed: onZoomIn,
+          mini: true,
+        ),
+        SizedBox(height: 8),
+        FloatingActionButton(
+          heroTag: "zoomOut",
+          child: Icon(Icons.remove),
+          onPressed: onZoomOut,
+          mini: true,
+        ),
+      ],
+    );
+  }
+}
+
+class RecenterButton extends StatelessWidget {
+  final VoidCallback onPressed;
+
+  const RecenterButton({Key? key, required this.onPressed}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(16.0),
+      child: ElevatedButton.icon(
+        icon: Icon(Icons.my_location),
+        label: Text('Recentrer sur Paris'),
+        onPressed: onPressed,
+        style: ElevatedButton.styleFrom(
+          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+        ),
+      ),
     );
   }
 }
