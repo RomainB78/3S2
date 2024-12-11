@@ -3,6 +3,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:swipezone/domains/location_manager.dart';
 import 'package:swipezone/repositories/models/location.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ItineraryPage extends StatefulWidget {
   final String title;
@@ -59,7 +60,23 @@ class _ItineraryPageState extends State<ItineraryPage> {
               ],
             ),
           ),
-          RecenterButton(onPressed: _recenterToParis),
+          Padding(
+            padding: const EdgeInsets.all(16.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                RecenterButton(onPressed: _recenterToParis),
+                ElevatedButton(
+                  onPressed: _openGoogleMaps,
+                  child: Text('Google Maps'),
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                  ),
+                ),
+              ],
+            ),
+          ),
         ],
       ),
     );
@@ -74,6 +91,20 @@ class _ItineraryPageState extends State<ItineraryPage> {
     double newZoom = (zoomIn ? _currentZoom + 1 : _currentZoom - 1).clamp(1.0, 18.0);
     setState(() => _currentZoom = newZoom);
     _mapController.move(_mapController.camera.center, newZoom);
+  }
+
+  void _openGoogleMaps() async {
+    String url = 'https://www.google.com/maps/dir/';
+    for (var location in LocationManager().itinerary) {
+      url += '${location.localization.lat},${location.localization.lng}/';
+    }
+    url += 'data=!4m2!4m1!3e2';
+
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      print('Could not launch $url');
+    }
   }
 }
 
@@ -225,16 +256,13 @@ class RecenterButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(16.0),
-      child: ElevatedButton.icon(
-        icon: Icon(Icons.my_location),
-        label: Text('Recentrer sur Paris'),
-        onPressed: onPressed,
-        style: ElevatedButton.styleFrom(
-          padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-        ),
+    return ElevatedButton.icon(
+      icon: Icon(Icons.my_location),
+      label: Text('Recentrer sur Paris'),
+      onPressed: onPressed,
+      style: ElevatedButton.styleFrom(
+        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
     );
   }

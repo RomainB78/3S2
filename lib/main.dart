@@ -18,11 +18,11 @@ final GoRouter _router = GoRouter(
       routes: [
         GoRoute(
           path: 'planningpage',
-          builder: (context, state) => const PlanningPage(title: 'PlanningPage'),
+          builder: (context, state) => const PlanningPage(title: 'Page de Planning'),
         ),
         GoRoute(
           path: 'selectpage',
-          builder: (context, state) => const SelectPage(title: 'SelectPage'),
+          builder: (context, state) => const SelectPage(title: 'Page de sélection'),
         ),
         GoRoute(
           path: 'itinerarypage',
@@ -39,7 +39,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp.router(
-      title: 'SwipeZone',
+      title: '3S2_SWIPEZONE',
       debugShowCheckedModeBanner: false,
 
       theme: ThemeData(
