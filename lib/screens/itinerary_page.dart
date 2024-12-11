@@ -15,6 +15,7 @@ class ItineraryPage extends StatefulWidget {
 
 class _ItineraryPageState extends State<ItineraryPage> {
   final MapController _mapController = MapController();
+  double _currentZoom = 13.0;
 
   LatLng? currentPosition;
 
@@ -57,9 +58,32 @@ class _ItineraryPageState extends State<ItineraryPage> {
           SizedBox(height: 16),
           Expanded(
             flex: 5,
-            child: FlutterMapView(
-              locations: itinerary,
-              mapController: _mapController,
+            child: Stack(
+              children: [
+                FlutterMapView(
+                  locations: itinerary,
+                  mapController: _mapController,
+                ),
+                Positioned(
+                  right: 16,
+                  bottom: 16,
+                  child: Column(
+                    children: [
+                      FloatingActionButton(
+                        heroTag: "zoomIn",
+                        child: Icon(Icons.add),
+                        onPressed: () => _zoom(true),
+                      ),
+                      SizedBox(height: 8),
+                      FloatingActionButton(
+                        heroTag: "zoomOut",
+                        child: Icon(Icons.remove),
+                        onPressed: () => _zoom(false),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           ),
           Padding(
@@ -80,7 +104,19 @@ class _ItineraryPageState extends State<ItineraryPage> {
   }
 
   void _recenterToParis() {
-    _mapController.move(LatLng(48.870215,2.328324), 12.5);
+    _mapController.move(LatLng(48.870215, 2.328324), 12.5);
+    setState(() {
+      _currentZoom = 12.5;
+    });
+  }
+
+  void _zoom(bool zoomIn) {
+    double newZoom = zoomIn ? _currentZoom + 1 : _currentZoom - 1;
+    newZoom = newZoom.clamp(1.0, 18.0); // Limiter le zoom entre 1 et 18
+    setState(() {
+      _currentZoom = newZoom;
+    });
+    _mapController.move(_mapController.camera.center, newZoom);
   }
 }
 
@@ -145,4 +181,3 @@ class FlutterMapView extends StatelessWidget {
     );
   }
 }
-
