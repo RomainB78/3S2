@@ -37,11 +37,10 @@ class _ItineraryPageState extends State<ItineraryPage> {
       ),
       body: Column(
         children: [
-          // Partie pour afficher la liste des itinéraires
           Expanded(
             flex: 2,
             child: Container(
-              height: 200, // Hauteur fixe pour la liste
+              height: 200,
               child: ListView.builder(
                 itemCount: itinerary.length,
                 itemBuilder: (context, index) {
@@ -55,10 +54,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
               ),
             ),
           ),
-          // Un espacement entre la liste et la carte
           SizedBox(height: 16),
-
-          // Partie pour afficher la carte
           Expanded(
             flex: 5,
             child: FlutterMapView(
@@ -66,14 +62,11 @@ class _ItineraryPageState extends State<ItineraryPage> {
               mapController: _mapController,
             ),
           ),
-
-          // Partie pour afficher les boutons sous la carte
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Bouton de recentrage sur Paris
                 IconButton(
                   icon: const Icon(Icons.my_location),
                   onPressed: _recenterToParis,
@@ -86,9 +79,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
     );
   }
 
-  // Fonction pour recentrer la carte sur Paris
   void _recenterToParis() {
-    _mapController.move(LatLng(48.85944, 2.326048), 13.0);
+    _mapController.move(LatLng(48.870215,2.328324), 12.5);
   }
 }
 
@@ -103,13 +95,25 @@ class FlutterMapView extends StatelessWidget {
     return FlutterMap(
       mapController: mapController,
       options: MapOptions(
-        initialCenter: LatLng(48.85944, 2.326048), // Center on Paris
+        initialCenter: LatLng(48.85944, 2.326048),
         initialZoom: 13.0,
       ),
       children: [
         TileLayer(
           urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
           userAgentPackageName: 'com.example.app',
+        ),
+        PolylineLayer(
+          polylines: [
+            Polyline(
+              points: locations.map((location) => LatLng(
+                location.localization.lat ?? 0.0,
+                location.localization.lng ?? 0.0,
+              )).toList(),
+              strokeWidth: 4.0,
+              color: Colors.blue,
+            ),
+          ],
         ),
         MarkerLayer(
           markers: locations.asMap().entries.map((entry) {
