@@ -52,7 +52,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
             child: FlutterMapView(
               locations: itinerary,
               mapController: _mapController, // Passer le contrôleur à la carte
-            ),
+
+              ),
           ),
 
           // Partie pour afficher les boutons sous la carte
@@ -118,9 +119,9 @@ class FlutterMapView extends StatelessWidget {
                 child: Text(
                   '${index + 1}', // Affiche le numéro de l'index
                   style: TextStyle(
-                    fontSize: 16.0,
+                    fontSize: 30.0,
                     fontWeight: FontWeight.bold,
-                    color: Colors.blue,
+                    color: Colors.red,
                   ),
                 ),
               ),
