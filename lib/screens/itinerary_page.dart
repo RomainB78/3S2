@@ -9,14 +9,23 @@ class ItineraryPage extends StatefulWidget {
 
   const ItineraryPage({Key? key, required this.title}) : super(key: key);
 
-
   @override
   _ItineraryPageState createState() => _ItineraryPageState();
 }
 
 class _ItineraryPageState extends State<ItineraryPage> {
   final MapController _mapController = MapController();
+
   LatLng? currentPosition;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _recenterToParis();
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     List<Location> itinerary = LocationManager().itinerary;
@@ -31,16 +40,19 @@ class _ItineraryPageState extends State<ItineraryPage> {
           // Partie pour afficher la liste des itinéraires
           Expanded(
             flex: 2,
-            child: ListView.builder(
-              itemCount: itinerary.length,
-              itemBuilder: (context, index) {
-                Location location = itinerary[index];
-                return ListTile(
-                  leading: Text('${index + 1}.'),
-                  title: Text(location.nom),
-                  subtitle: Text(location.localization.adress ?? "No address provided"),
-                );
-              },
+            child: Container(
+              height: 200, // Hauteur fixe pour la liste
+              child: ListView.builder(
+                itemCount: itinerary.length,
+                itemBuilder: (context, index) {
+                  Location location = itinerary[index];
+                  return ListTile(
+                    leading: Text('${index + 1}.'),
+                    title: Text(location.nom),
+                    subtitle: Text(location.localization.adress ?? "No address provided"),
+                  );
+                },
+              ),
             ),
           ),
           // Un espacement entre la liste et la carte
@@ -51,9 +63,8 @@ class _ItineraryPageState extends State<ItineraryPage> {
             flex: 5,
             child: FlutterMapView(
               locations: itinerary,
-              mapController: _mapController, // Passer le contrôleur à la carte
-
-              ),
+              mapController: _mapController,
+            ),
           ),
 
           // Partie pour afficher les boutons sous la carte
@@ -65,10 +76,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
                 // Bouton de recentrage sur Paris
                 IconButton(
                   icon: const Icon(Icons.my_location),
-                  onPressed: () {
-                    // Fonction pour recentrer sur Paris
-                    _recenterToParis();
-                  },
+                  onPressed: _recenterToParis,
                 ),
               ],
             ),
@@ -80,8 +88,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
 
   // Fonction pour recentrer la carte sur Paris
   void _recenterToParis() {
-    // Recentrer la carte sur Paris
-    _mapController.move(LatLng(48.85944, 2.326048), 13.0); // Déplace la carte sur Paris à un niveau de zoom de 13
+    _mapController.move(LatLng(48.85944, 2.326048), 13.0);
   }
 }
 
@@ -94,13 +101,15 @@ class FlutterMapView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
-      mapController: mapController, // Passer le contrôleur à la carte
+      mapController: mapController,
       options: MapOptions(
+        initialCenter: LatLng(48.85944, 2.326048), // Center on Paris
+        initialZoom: 13.0,
       ),
       children: [
         TileLayer(
           urlTemplate: "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
-          userAgentPackageName: 'com.example.app', // Changez avec votre identifiant.
+          userAgentPackageName: 'com.example.app',
         ),
         MarkerLayer(
           markers: locations.asMap().entries.map((entry) {
@@ -117,7 +126,7 @@ class FlutterMapView extends StatelessWidget {
               child: Container(
                 alignment: Alignment.center,
                 child: Text(
-                  '${index + 1}', // Affiche le numéro de l'index
+                  '${index + 1}',
                   style: TextStyle(
                     fontSize: 30.0,
                     fontWeight: FontWeight.bold,
@@ -132,3 +141,4 @@ class FlutterMapView extends StatelessWidget {
     );
   }
 }
+
