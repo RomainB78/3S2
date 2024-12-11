@@ -32,3 +32,4 @@ class LocationCard extends StatelessWidget {
     );
   }
 }
+
