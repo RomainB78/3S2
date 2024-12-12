@@ -9,7 +9,7 @@
 
     <!-- Déclaration de l'application -->
     <application
-        android:label="SmartSafeGuard"
+        android:label="SwipeZone3s2"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
 
