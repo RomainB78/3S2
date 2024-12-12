@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 import 'package:swipezone/domains/location_manager.dart';
 import 'package:swipezone/repositories/models/location.dart';
 

@@ -6,7 +6,7 @@ import 'package:swipezone/screens/select_page.dart';
 import 'package:swipezone/screens/itinerary_page.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 final GoRouter _router = GoRouter(
@@ -34,7 +34,7 @@ final GoRouter _router = GoRouter(
 );
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  const MyApp({super.key});
 
   @override
   Widget build(BuildContext context) {

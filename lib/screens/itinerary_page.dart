@@ -8,7 +8,7 @@ import 'package:url_launcher/url_launcher.dart';
 class ItineraryPage extends StatefulWidget {
   final String title;
 
-  const ItineraryPage({Key? key, required this.title}) : super(key: key);
+  const ItineraryPage({super.key, required this.title});
 
   @override
   _ItineraryPageState createState() => _ItineraryPageState();
@@ -32,7 +32,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title, style: TextStyle(fontWeight: FontWeight.bold)),
+        title: Text(widget.title, style: const TextStyle(fontWeight: FontWeight.bold)),
         elevation: 0,
       ),
       body: Column(
@@ -67,12 +67,12 @@ class _ItineraryPageState extends State<ItineraryPage> {
               children: [
                 RecenterButton(onPressed: _recenterToParis),
                 ElevatedButton(
-                  onPressed: _openGoogleMaps,
-                  child: Text('Google Maps'),
+                  onPressed: _launchURL,
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
                   ),
+                  child: const Text('Google Maps'),
                 ),
               ],
             ),
@@ -83,7 +83,7 @@ class _ItineraryPageState extends State<ItineraryPage> {
   }
 
   void _recenterToParis() {
-    _mapController.move(LatLng(48.870215, 2.328324), 12.5);
+    _mapController.move(const LatLng(48.870215, 2.328324), 12.5);
     setState(() => _currentZoom = 12.5);
   }
 
@@ -93,17 +93,17 @@ class _ItineraryPageState extends State<ItineraryPage> {
     _mapController.move(_mapController.camera.center, newZoom);
   }
 
-  void _openGoogleMaps() async {
-    String url = 'https://www.google.com/maps/dir/';
-    for (var location in LocationManager().itinerary) {
-      url += '${location.localization.lat},${location.localization.lng}/';
-    }
-    url += 'data=!4m2!4m1!3e2';
-
-    if (await canLaunch(url)) {
-      await launch(url);
+  _launchURL() async {
+    const String baseUrl = 'https://www.google.com/maps/dir/';
+    final List<Location> itinerary = LocationManager().itinerary;
+    String url = '$baseUrl${itinerary
+        .map((location) =>
+    '${Uri.encodeComponent(location.localization.lat.toString())},${Uri.encodeComponent(location.localization.lng.toString())}')
+        .join('/')}/data=!4m2!4m1!3e2';
+    if (await launch(url)) {
+      await canLaunch(url);
     } else {
-      print('Could not launch $url');
+      throw 'Could not launch $url';
     }
   }
 }
@@ -111,22 +111,22 @@ class _ItineraryPageState extends State<ItineraryPage> {
 class ItineraryListView extends StatelessWidget {
   final List<Location> itinerary;
 
-  const ItineraryListView({Key? key, required this.itinerary}) : super(key: key);
+  const ItineraryListView({super.key, required this.itinerary});
 
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 8),
       itemCount: itinerary.length,
-      separatorBuilder: (context, index) => Divider(height: 1),
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
         Location location = itinerary[index];
         return ListTile(
           leading: CircleAvatar(
-            child: Text('${index + 1}', style: TextStyle(fontWeight: FontWeight.bold)),
             backgroundColor: Theme.of(context).colorScheme.secondary,
+            child: Text('${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
           ),
-          title: Text(location.nom, style: TextStyle(fontWeight: FontWeight.bold)),
+          title: Text(location.nom, style: const TextStyle(fontWeight: FontWeight.bold)),
           subtitle: Text(location.localization.adress ?? "Adresse non disponible"),
         );
       },
@@ -138,13 +138,13 @@ class EnhancedFlutterMapView extends StatelessWidget {
   final List<Location> locations;
   final MapController mapController;
 
-  const EnhancedFlutterMapView({Key? key, required this.locations, required this.mapController}) : super(key: key);
+  const EnhancedFlutterMapView({super.key, required this.locations, required this.mapController});
 
   @override
   Widget build(BuildContext context) {
     return FlutterMap(
       mapController: mapController,
-      options: MapOptions(
+      options: const MapOptions(
         initialCenter: LatLng(48.85944, 2.326048),
         initialZoom: 13.0,
       ),
@@ -203,7 +203,7 @@ class MarkerPainter extends CustomPainter {
     final textPainter = TextPainter(
       text: TextSpan(
         text: number.toString(),
-        style: TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
+        style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.bold),
       ),
       textDirection: TextDirection.ltr,
     );
@@ -225,7 +225,7 @@ class ZoomControls extends StatelessWidget {
   final VoidCallback onZoomIn;
   final VoidCallback onZoomOut;
 
-  const ZoomControls({Key? key, required this.onZoomIn, required this.onZoomOut}) : super(key: key);
+  const ZoomControls({super.key, required this.onZoomIn, required this.onZoomOut});
 
   @override
   Widget build(BuildContext context) {
@@ -233,16 +233,16 @@ class ZoomControls extends StatelessWidget {
       children: [
         FloatingActionButton(
           heroTag: "zoomIn",
-          child: Icon(Icons.add),
           onPressed: onZoomIn,
           mini: true,
+          child: const Icon(Icons.add),
         ),
-        SizedBox(height: 8),
+        const SizedBox(height: 8),
         FloatingActionButton(
           heroTag: "zoomOut",
-          child: Icon(Icons.remove),
           onPressed: onZoomOut,
           mini: true,
+          child: const Icon(Icons.remove),
         ),
       ],
     );
@@ -252,16 +252,16 @@ class ZoomControls extends StatelessWidget {
 class RecenterButton extends StatelessWidget {
   final VoidCallback onPressed;
 
-  const RecenterButton({Key? key, required this.onPressed}) : super(key: key);
+  const RecenterButton({super.key, required this.onPressed});
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton.icon(
-      icon: Icon(Icons.my_location),
-      label: Text('Recentrer sur Paris'),
+      icon: const Icon(Icons.my_location),
+      label: const Text('Recentrer sur Paris'),
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+        padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
       ),
     );

@@ -56,7 +56,7 @@ class _SelectPageState extends State<SelectPage> {
           ),
         ],
       ),
-      floatingActionButton: ViewItineraryButton(),
+      floatingActionButton: const ViewItineraryButton(),
     );
   }
 
@@ -92,11 +92,11 @@ class AvailableLocationsList extends StatelessWidget {
   final Function(Location, bool?) onLocationToggled;
 
   const AvailableLocationsList({
-    Key? key,
+    super.key,
     required this.plans,
     required this.itinerary,
     required this.onLocationToggled,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -112,12 +112,12 @@ class AvailableLocationsList extends StatelessWidget {
         Expanded(
           child: ListView.separated(
             itemCount: plans.length,
-            separatorBuilder: (context, index) => Divider(height: 1),
+            separatorBuilder: (context, index) => const Divider(height: 1),
             itemBuilder: (context, index) {
               Location location = plans.keys.elementAt(index);
               bool isSelected = itinerary.contains(location);
               return ListTile(
-                title: Text(location.nom, style: TextStyle(fontWeight: FontWeight.w500)),
+                title: Text(location.nom, style: const TextStyle(fontWeight: FontWeight.w500)),
                 trailing: Checkbox(
                   value: isSelected,
                   onChanged: (val) => onLocationToggled(location, val),
@@ -138,11 +138,11 @@ class SelectedLocationsList extends StatelessWidget {
   final Function(Location) onRemove;
 
   const SelectedLocationsList({
-    Key? key,
+    super.key,
     required this.itinerary,
     required this.onReorder,
     required this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -181,25 +181,25 @@ class SelectedLocationItem extends StatelessWidget {
   final VoidCallback onRemove;
 
   const SelectedLocationItem({
-    Key? key,
+    super.key,
     required this.location,
     required this.index,
     required this.onRemove,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
     return Card(
       elevation: 2,
-      margin: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
       child: ListTile(
         leading: CircleAvatar(
-          child: Text('${index + 1}'),
           backgroundColor: Theme.of(context).colorScheme.secondary,
+          child: Text('${index + 1}'),
         ),
-        title: Text(location.nom, style: TextStyle(fontWeight: FontWeight.w500)),
+        title: Text(location.nom, style: const TextStyle(fontWeight: FontWeight.w500)),
         trailing: IconButton(
-          icon: Icon(Icons.remove_circle, color: Colors.red),
+          icon: const Icon(Icons.remove_circle, color: Colors.red),
           onPressed: onRemove,
         ),
       ),
@@ -208,13 +208,15 @@ class SelectedLocationItem extends StatelessWidget {
 }
 
 class ViewItineraryButton extends StatelessWidget {
+  const ViewItineraryButton({super.key});
+
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () => GoRouter.of(context).push('/itinerarypage'),
       tooltip: 'Voir l\'itinéraire',
-      icon: Icon(Icons.map),
-      label: Text('Voir l\'itinéraire'),
+      icon: const Icon(Icons.map),
+      label: const Text('Voir l\'itinéraire'),
     );
   }
 }

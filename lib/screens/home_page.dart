@@ -112,11 +112,6 @@ class _HomePageState extends State<HomePage> {
           }
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {},
-        tooltip: 'Add plan',
-        child: const Icon(Icons.add),
-      ),
     );
   }
 
