@@ -27,7 +27,7 @@ class _PlanningPageState extends State<PlanningPage> {
           return ListTile(
             leading: Image.network(itinerary[index].photoUrl ?? "", width: 50, height: 50),
             title: Text(itinerary[index].nom),
-            subtitle: Text(itinerary[index].localization.adress ?? "No address communicated"),
+            subtitle: Text(itinerary[index].localization.adress ?? "No address"),
           );
         },
       ),
