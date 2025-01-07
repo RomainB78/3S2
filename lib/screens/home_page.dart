@@ -99,13 +99,25 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Center(
-                child: FilledButton(
+              Column(
+                children: [
+                  FilledButton(
                     onPressed: () {
                       context.go('/selectpage');
                     },
-                    child: const Text("Create plan")),
-              )
+                    child: const Text("Create plan"),
+                  ),
+                  const SizedBox(height: 10), // Espacement entre les boutons
+                  FilledButton(
+                    onPressed: () {
+                      context.go('/NFCScanner');
+                    },
+                    child: const Text("NFC tags"),
+                  ),
+                ],
+              ),
+
+
             ]);
           } else {
             return const Center(child: CircularProgressIndicator());

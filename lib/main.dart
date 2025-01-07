@@ -4,6 +4,7 @@ import 'package:swipezone/screens/home_page.dart';
 import 'package:swipezone/screens/planning_page.dart';
 import 'package:swipezone/screens/select_page.dart';
 import 'package:swipezone/screens/itinerary_page.dart';
+import 'package:swipezone/nfc.dart';
 
 void main() {
   runApp(const MyApp());
@@ -27,6 +28,10 @@ final GoRouter _router = GoRouter(
         GoRoute(
           path: 'itinerarypage',
           builder: (context, state) => const ItineraryPage(title: 'Votre Itinéraire'),
+        ),
+        GoRoute(
+          path: 'NFCScanner',
+          builder: (context, state) => const NFCScanner(title: 'Tags NFC'),
         ),
       ],
     ),
