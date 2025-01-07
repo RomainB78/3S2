@@ -22,7 +22,8 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: Text(widget.title),
+        title: new Text(widget.title),
+        centerTitle: true,
       ),
       body: FutureBuilder(
         future: LocationUseCase().getLocation(),
@@ -105,14 +106,20 @@ class _HomePageState extends State<HomePage> {
                     onPressed: () {
                       context.go('/selectpage');
                     },
-                    child: const Text("Create plan"),
+                    child: const Text("Créer un plan"),
                   ),
-                  const SizedBox(height: 10), // Espacement entre les boutons
+                  const SizedBox(height: 2), // Espacement entre les boutons
                   FilledButton(
                     onPressed: () {
                       context.go('/NFCScanner');
                     },
-                    child: const Text("NFC tags"),
+                    child: const Text("Tags NFC"),
+                  ),
+                  FilledButton(
+                    onPressed: () {
+                      context.go('/VisitedPlacesPage');
+                    },
+                    child: const Text("Lieux Visités"),
                   ),
                 ],
               ),
