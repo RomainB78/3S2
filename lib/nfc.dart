@@ -10,7 +10,6 @@ class NFCScanner extends StatefulWidget {
 }
 
 class _NFCScannerState extends State<NFCScanner> {
-  bool _isNFCAvailable = true;
   String _nfcData = 'No NFC tag detected';
   bool _isScanning = false;
 
@@ -23,7 +22,6 @@ class _NFCScannerState extends State<NFCScanner> {
   Future<void> _checkNFCAvailability() async {
     bool isAvailable = await NfcManager.instance.isAvailable();
     setState(() {
-      _isNFCAvailable = isAvailable;
     });
   }
 
@@ -88,7 +86,8 @@ class _NFCScannerState extends State<NFCScanner> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text('NFC Scanner'),
+        backgroundColor: Theme.of(context).colorScheme.inversePrimary,
+        title: Text(widget.title),
       ),
       body: Center(
         child: Padding(
