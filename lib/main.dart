@@ -24,7 +24,22 @@ final GoRouter _router = GoRouter(
         ),
         GoRoute(
           path: 'selectpage',
-          builder: (context, state) => const SelectPage(title: 'Page de sélection'),
+          pageBuilder: (context, state) => CustomTransitionPage(
+            child: const SelectPage(title: 'Page de sélection'),
+            transitionsBuilder: (context, animation, secondaryAnimation, child) {
+              const Offset begin = Offset(1.0, 0.0); // La page commence hors écran à droite
+              const Offset end = Offset.zero; // La page termine au centre de l'écran
+              const Curve curve = Curves.easeInOut;
+
+              var tween = Tween(begin: begin, end: end).chain(CurveTween(curve: curve));
+              var offsetAnimation = animation.drive(tween);
+
+              return SlideTransition(
+                position: offsetAnimation,
+                child: child,
+              );
+            },
+          ),
         ),
         GoRoute(
           path: 'itinerarypage',
@@ -43,6 +58,7 @@ final GoRouter _router = GoRouter(
   ],
 );
 
+
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -60,4 +76,3 @@ class MyApp extends StatelessWidget {
     );
   }
 }
-
