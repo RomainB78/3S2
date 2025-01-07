@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Theme.of(context).colorScheme.inversePrimary,
-        title: new Text(widget.title),
+        title: Text(widget.title),
         centerTitle: true,
       ),
       body: FutureBuilder(
