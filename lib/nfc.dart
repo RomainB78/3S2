@@ -10,7 +10,7 @@ class NFCScanner extends StatefulWidget {
 }
 
 class _NFCScannerState extends State<NFCScanner> {
-  bool _isNFCAvailable = false;
+  bool _isNFCAvailable = true;
   String _nfcData = 'No NFC tag detected';
   bool _isScanning = false;
 
@@ -96,13 +96,7 @@ class _NFCScannerState extends State<NFCScanner> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              if (!_isNFCAvailable)
-                const Text(
-                  'NFC is not available on this device',
-                  style: TextStyle(color: Colors.red),
-                )
-              else
-                Column(
+              Column(
                   children: [
                     ElevatedButton(
                       onPressed: _isScanning ? _stopNFCScan : _startNFCScan,
