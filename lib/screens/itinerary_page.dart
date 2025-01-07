@@ -123,11 +123,29 @@ class ItineraryListView extends StatelessWidget {
         Location location = itinerary[index];
         return ListTile(
           leading: CircleAvatar(
-            backgroundColor: Theme.of(context).colorScheme.secondary,
-            child: Text('${index + 1}', style: const TextStyle(fontWeight: FontWeight.bold)),
+            backgroundColor: Theme.of(context).colorScheme.primary,
+            child: Text(
+              '${index + 1}',
+              style: const TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
           ),
-          title: Text(location.nom, style: const TextStyle(fontWeight: FontWeight.bold)),
-          subtitle: Text(location.localization.adress ?? "Adresse non disponible"),
+          title: Text(
+            location.nom,
+            style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+          ),
+          subtitle: Row(
+            children: [
+              const Icon(Icons.location_on, size: 16, color: Colors.grey),
+              const SizedBox(width: 4),
+              Expanded(
+                child: Text(
+                  location.localization.adress ?? "Adresse non disponible",
+                  style: const TextStyle(fontSize: 14, color: Colors.grey),
+                  overflow: TextOverflow.ellipsis,
+                ),
+              ),
+            ],
+          ),
         );
       },
     );
@@ -233,16 +251,18 @@ class ZoomControls extends StatelessWidget {
       children: [
         FloatingActionButton(
           heroTag: "zoomIn",
-          onPressed: onZoomIn,
           mini: true,
-          child: const Icon(Icons.add),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          onPressed: onZoomIn,
+          child: const Icon(Icons.add, color: Colors.white),
         ),
         const SizedBox(height: 8),
         FloatingActionButton(
           heroTag: "zoomOut",
-          onPressed: onZoomOut,
           mini: true,
-          child: const Icon(Icons.remove),
+          backgroundColor: Theme.of(context).colorScheme.primary,
+          onPressed: onZoomOut,
+          child: const Icon(Icons.remove, color: Colors.white),
         ),
       ],
     );

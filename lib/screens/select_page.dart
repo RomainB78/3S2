@@ -190,14 +190,25 @@ class SelectedLocationItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      elevation: 2,
-      margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      elevation: 4,
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8), // Plus d'espace
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)), // Coins arrondis
       child: ListTile(
         leading: CircleAvatar(
-          backgroundColor: Theme.of(context).colorScheme.secondary,
-          child: Text('${index + 1}'),
+          backgroundColor: Theme.of(context).colorScheme.primary, // Couleur dynamique
+          radius: 20, // Taille du cercle augmentée
+          child: Text(
+            '${index + 1}',
+            style: const TextStyle(
+              color: Colors.white, // Texte contrastant
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ),
-        title: Text(location.nom, style: const TextStyle(fontWeight: FontWeight.w500)),
+        title: Text(
+          location.nom,
+          style: const TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+        ),
         trailing: IconButton(
           icon: const Icon(Icons.remove_circle, color: Colors.red),
           onPressed: onRemove,
@@ -215,8 +226,14 @@ class ViewItineraryButton extends StatelessWidget {
     return FloatingActionButton.extended(
       onPressed: () => GoRouter.of(context).push('/itinerarypage'),
       tooltip: 'Voir l\'itinéraire',
-      icon: const Icon(Icons.map),
-      label: const Text('Voir l\'itinéraire'),
+      icon: const Icon(Icons.map, size: 28),
+      label: const Text(
+        'Voir l\'itinéraire',
+        style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+      ),
+      backgroundColor: Theme.of(context).colorScheme.primary,
+      foregroundColor: Colors.white,
+      elevation: 6,
     );
   }
 }
