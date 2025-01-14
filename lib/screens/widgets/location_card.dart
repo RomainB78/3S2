@@ -38,7 +38,7 @@ class LocationCard extends StatelessWidget {
                 ClipRRect(
                   borderRadius: BorderRadius.circular(12), // Coins arrondis pour l'image
                   child: AspectRatio(
-                    aspectRatio: 16 / 11, // Ajustez le ratio selon vos besoins
+                    aspectRatio: 2/2, // Ajustez le ratio selon vos besoins
                     child: Image.network(
                       location.photoUrl ?? "",
                       fit: BoxFit.cover, // Ajuste l'image pour couvrir l'espace

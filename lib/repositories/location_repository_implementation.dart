@@ -12,7 +12,7 @@ class ILocationRepository implements LocationRepository {
         "La Tour Eiffel est un monument emblématique de Paris, construit en 1889.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/a/a8/Tour_Eiffel_Wikimedia_Commons.jpg",
+        "https://cdn.sortiraparis.com/images/80/103799/968496-tour-eiffel-une-exposition-inedite-gratuite-en-hommage-a-gustave-eiffel-sur-le-parvis-nos-photos.jpg",
         Categories.Tower,
         null,
         Localization("Champ de Mars, 5 Avenue Anatole France, 75007 Paris",

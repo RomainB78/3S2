@@ -47,7 +47,9 @@ class _HomePageState extends State<HomePage> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     ElevatedButton(
-                      onPressed: _noMoreLocations ? null : () {
+                      onPressed: _noMoreLocations
+                          ? null
+                          : () {
                         setState(() {
                           _locationManager.Idontwant();
                           _checkForMoreLocations();
@@ -63,7 +65,9 @@ class _HomePageState extends State<HomePage> {
                     ),
                     const SizedBox(width: 20),
                     ElevatedButton(
-                      onPressed: _noMoreLocations ? null : () {
+                      onPressed: _noMoreLocations
+                          ? null
+                          : () {
                         setState(() {
                           _locationManager.Iwant();
                           _checkForMoreLocations();
@@ -95,31 +99,71 @@ class _HomePageState extends State<HomePage> {
                   ),
                 ],
               ),
-              Column(
+              const SizedBox(height: 25),
+              Row(
                 children: [
-                  FilledButton(
-                    onPressed: () {
+                  GestureDetector(
+                    onTap: () {
                       context.go('/selectpage');
                     },
-                    child: const Text("Créer un plan"),
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.map_outlined, // Icône de carte par défaut dans Flutter
+                          size: 40,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          "     Créer un plan",
+                          style: TextStyle(fontSize: 18),
+                        ),
+                      ],
+                    ),
                   ),
-                  const SizedBox(height: 2), // Espacement entre les boutons
-                  FilledButton(
-                    onPressed: () {
+                  const SizedBox(width: 25),
+                  GestureDetector(
+                    onTap: () {
                       context.go('/NFCScanner');
                     },
-                    child: const Text("Tags NFC"),
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.nfc, // Icône de carte par défaut dans Flutter
+                          size: 40,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          "NFC Détection",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
                   ),
-                  FilledButton(
-                    onPressed: () {
+                  const SizedBox(width: 25),
+                  GestureDetector(
+                    onTap: () {
                       context.go('/VisitedPlacesPage');
                     },
-                    child: const Text("Lieux Visités"),
-                  ),
+                    child: Column(
+                      children: [
+                        const Icon(
+                          Icons.place, // Icône de carte par défaut dans Flutter
+                          size: 40,
+                          color: Colors.blue,
+                        ),
+                        const SizedBox(width: 4),
+                        const Text(
+                          "Lieux Visités",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                      ],
+                    ),
+                  ),// Espacement entre les options
+
                 ],
               ),
-
-
             ]);
           } else {
             return const Center(child: CircularProgressIndicator());
@@ -137,4 +181,3 @@ class _HomePageState extends State<HomePage> {
     }
   }
 }
-
