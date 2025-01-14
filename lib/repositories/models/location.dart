@@ -15,12 +15,12 @@ class Location {
   String? description;
   WeeklySchedule? schedule;
   Contact? contact;
-  String? photoUrl;
+  String? assetPath;
   @enumerated
   Categories category;
   List<Activities>? activities;
   Localization localization;
 
   Location(this.nom, this.description, this.schedule, this.contact,
-      this.photoUrl, this.category, this.activities, this.localization);
+      this.assetPath, this.category, this.activities, this.localization);
 }

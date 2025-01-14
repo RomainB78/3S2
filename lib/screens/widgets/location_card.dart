@@ -40,7 +40,7 @@ class LocationCard extends StatelessWidget {
                   child: AspectRatio(
                     aspectRatio: 2/2, // Ajustez le ratio selon vos besoins
                     child: Image.network(
-                      location.photoUrl ?? "",
+                      location.assetPath ?? "",
                       fit: BoxFit.cover, // Ajuste l'image pour couvrir l'espace
                       errorBuilder: (context, error, stackTrace) => const Icon(
                         Icons.image,
