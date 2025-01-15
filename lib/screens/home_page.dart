@@ -112,15 +112,15 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       context.go('/selectpage');
                     },
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.map_outlined,
                           size: 40,
                           color: Colors.blue,
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
+                        SizedBox(width: 4),
+                        Text(
                           "     Créer un plan",
                           style: TextStyle(fontSize: 18),
                         ),
@@ -132,15 +132,15 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       context.go('/NFCScanner');
                     },
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.nfc,
                           size: 40,
                           color: Colors.blue,
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
+                        SizedBox(width: 4),
+                        Text(
                           "NFC Détection",
                           style: TextStyle(fontSize: 16),
                         ),
@@ -152,15 +152,15 @@ class _HomePageState extends State<HomePage> {
                     onTap: () {
                       context.go('/VisitedPlacesPage');
                     },
-                    child: Column(
+                    child: const Column(
                       children: [
-                        const Icon(
+                        Icon(
                           Icons.place,
                           size: 40,
                           color: Colors.blue,
                         ),
-                        const SizedBox(width: 4),
-                        const Text(
+                        SizedBox(width: 4),
+                        Text(
                           "Lieux Visités",
                           style: TextStyle(fontSize: 16),
                         ),

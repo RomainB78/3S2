@@ -2,8 +2,6 @@ import 'package:swipezone/repositories/location_repository.dart';
 import 'package:swipezone/repositories/models/categories.dart';
 import 'package:swipezone/repositories/models/localization.dart';
 import 'package:swipezone/repositories/models/location.dart';
-import 'dart:ui';
-import 'package:isar/isar.dart';
 class ILocationRepository implements LocationRepository {
   @override
   Future<List<Location>> getLocations() {
@@ -13,7 +11,7 @@ class ILocationRepository implements LocationRepository {
         "La Tour Eiffel est un monument emblématique de Paris, construit en 1889.",
         null,
         null,
-        "assets/images/tour_eiffel.jpg",
+        "https://cdn.pixabay.com/photo/2015/10/06/18/26/eiffel-tower-975004_1280.jpg",
         null,
         Categories.Tower,
         null,
@@ -25,7 +23,7 @@ class ILocationRepository implements LocationRepository {
         "Le Louvre est le plus grand musée d'art du monde, abritant la Joconde.",
         null,
         null,
-        "assets/images/louvre.jpg",
+        "https://api-www.louvre.fr/sites/default/files/2021-01/cour-napoleon-et-pyramide_1.jpg",
         null,
         Categories.Museum,
         null,
@@ -36,7 +34,7 @@ class ILocationRepository implements LocationRepository {
         "La cathédrale gothique Notre-Dame est située sur l'île de la Cité.",
         null,
         null,
-        "assets/images/notredame.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Notre-Dame_de_Paris_2013-07-24.jpg/280px-Notre-Dame_de_Paris_2013-07-24.jpg",
         null,
         Categories.Church,
         null,
@@ -48,7 +46,7 @@ class ILocationRepository implements LocationRepository {
         "Construit pour honorer les victoires de Napoléon, il est situé sur la place de l'Étoile.",
         null,
         null,
-        "assets/images/arc.jpg",
+        "https://www.timographie360.fr/photos/realisations/principal/vignettes/visite-virtuelle-arc-triomphe_80.jpg",
         null,
         Categories.HistoricalSite,
         null,
@@ -59,7 +57,7 @@ class ILocationRepository implements LocationRepository {
         "La basilique du Sacré-Cœur est un symbole religieux de Montmartre.",
         null,
         null,
-        "assets/images/sacre.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sacr%C3%A9_Coeur_Fa%C3%A7ade_1.jpg/1200px-Sacr%C3%A9_Coeur_Fa%C3%A7ade_1.jpg",
         null,
         Categories.Church,
         null,
@@ -71,7 +69,7 @@ class ILocationRepository implements LocationRepository {
         "Le Panthéon est un mausolée pour les grandes figures françaises.",
         null,
         null,
-        "assets/images/pantheon.jpg",
+        "https://www.paris-pantheon.fr/var/cmn_inter/storage/images/_aliases/homepage_banner_webp/7/5/6/4/120534657-1-fre-FR/47bbe4aa3b72-Pantheon-1-002-.webp.webp",
         null,
         Categories.HistoricalSite,
         null,
@@ -82,7 +80,7 @@ class ILocationRepository implements LocationRepository {
         "La plus grande place de Paris, connue pour son obélisque et ses fontaines.",
         null,
         null,
-        "assets/images/concorde.jpg",
+        "https://cdn.sortiraparis.com/images/80/77153/375986-histoire-de-la-place-de-la-concorde.jpg",
         null,
         Categories.HistoricalSite,
         null,
@@ -93,7 +91,7 @@ class ILocationRepository implements LocationRepository {
         "L'Opéra Garnier est une somptueuse salle de spectacle datant du XIXe siècle.",
         null,
         null,
-        'assets/images/garnier.jpg', // Utilisation d'un chemin d'image
+        'https://t4.ftcdn.net/jpg/02/23/96/01/360_F_223960113_AmVDB3xetvbxzIm1pEo1pWw4LlKT3Q93.jpg', // Utilisation d'un chemin d'image
         null, // Pas de widget Image directement
         Categories.Museum,
         null,
@@ -105,7 +103,7 @@ class ILocationRepository implements LocationRepository {
         "Le jardin des Tuileries est un jardin public historique situé près du Louvre.",
         null,
         null,
-        "assets/images/tuilerie.jpg",
+        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Jardin_des_Tuileries_-_panoramio_-_Javier_B.jpg/1200px-Jardin_des_Tuileries_-_panoramio_-_Javier_B.jpg",
         null,
         Categories.Park,
         null,
@@ -116,7 +114,7 @@ class ILocationRepository implements LocationRepository {
         "Ce pont richement orné relie les Champs-Élysées et les Invalides.",
         null,
         null,
-        "assets/images/alexandre.jpg",
+        "https://www.pariszigzag.fr/wp-content/uploads/2018/08/pont-alexandre-III-1-e1657183957127.jpg",
         null,
         Categories.HistoricalSite,
         null,

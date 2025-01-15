@@ -24,10 +24,10 @@ class LocationCard extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 child: Container(
                   decoration: BoxDecoration(
-                    gradient: LinearGradient(
+                    gradient: const LinearGradient(
                       colors: [
-                        const Color.fromARGB(255, 203, 150, 221),
-                        const Color.fromARGB(255, 203, 130, 221),
+                        Color.fromARGB(255, 203, 150, 221),
+                        Color.fromARGB(255, 203, 130, 221),
                       ],
                       begin: Alignment.topCenter,
                       end: Alignment.bottomCenter,
@@ -74,7 +74,7 @@ class LocationCard extends StatelessWidget {
                         // Nom du monument
                         Flexible(
                           child: Text(
-                            location.nom ?? "Nom non disponible",
+                            location.nom,
                             style: const TextStyle(
                               fontSize: 20,
                               fontWeight: FontWeight.bold,
@@ -89,7 +89,7 @@ class LocationCard extends StatelessWidget {
                         // Adresse
                         Flexible(
                           child: Text(
-                            location.localization?.adress ??
+                            location.localization.adress ??
                                 "Adresse non disponible",
                             style: const TextStyle(
                               fontSize: 14,
