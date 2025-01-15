@@ -4,6 +4,7 @@ import 'package:swipezone/screens/home_page.dart';
 import 'package:swipezone/screens/planning_page.dart';
 import 'package:swipezone/screens/select_page.dart';
 import 'package:swipezone/screens/itinerary_page.dart';
+import 'package:swipezone/screens/splash_screen.dart';
 import 'package:swipezone/nfc.dart';
 import 'package:swipezone/visited.dart';
 
@@ -12,8 +13,12 @@ void main() {
 }
 
 final GoRouter _router = GoRouter(
-  initialLocation: '/',
+  initialLocation: '/splash', // Démarre par le SplashScreen
   routes: [
+    GoRoute(
+      path: '/splash',
+      builder: (context, state) => const SplashScreen(),
+    ),
     GoRoute(
       path: '/',
       builder: (context, state) => const HomePage(title: 'HomePage'),
@@ -58,7 +63,6 @@ final GoRouter _router = GoRouter(
   ],
 );
 
-
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -67,7 +71,6 @@ class MyApp extends StatelessWidget {
     return MaterialApp.router(
       title: '3S2_SWIPEZONE',
       debugShowCheckedModeBanner: false,
-
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
