@@ -105,70 +105,70 @@ class _HomePageState extends State<HomePage> {
                 ),
               const SizedBox(height: 25),
               Center(
-              child :Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  GestureDetector(
-                    onTap: () {
-                      context.go('/selectpage');
-                    },
-                    child: const Column(
-                      children: [
-                        Icon(
-                          Icons.map_outlined,
-                          size: 40,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          "     Créer un plan",
-                          style: TextStyle(fontSize: 18),
-                        ),
-                      ],
+                child :Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        context.go('/selectpage');
+                      },
+                      child: const Column(
+                        children: [
+                          Icon(
+                            Icons.map_outlined,
+                            size: 40,
+                            color: Color.fromARGB(255, 169, 2, 215),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            "Create plan",
+                            style: TextStyle(fontSize: 18),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 25),
-                  GestureDetector(
-                    onTap: () {
-                      context.go('/NFCScanner');
-                    },
-                    child: const Column(
-                      children: [
-                        Icon(
-                          Icons.nfc,
-                          size: 40,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          "NFC Détection",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: () {
+                        context.go('/NFCScanner');
+                      },
+                      child: const Column(
+                        children: [
+                          Icon(
+                            Icons.nfc,
+                            size: 40,
+                            color: Color.fromARGB(255, 169, 2, 215),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            "NFC Detection",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                  const SizedBox(width: 25),
-                  GestureDetector(
-                    onTap: () {
-                      context.go('/VisitedPlacesPage');
-                    },
-                    child: const Column(
-                      children: [
-                        Icon(
-                          Icons.place,
-                          size: 40,
-                          color: Colors.blue,
-                        ),
-                        SizedBox(width: 4),
-                        Text(
-                          "Lieux Visités",
-                          style: TextStyle(fontSize: 16),
-                        ),
-                      ],
+                    const SizedBox(width: 25),
+                    GestureDetector(
+                      onTap: () {
+                        context.go('/VisitedPlacesPage');
+                      },
+                      child: const Column(
+                        children: [
+                          Icon(
+                            Icons.place,
+                            size: 40,
+                            color: Color.fromARGB(255, 169, 2, 215),
+                          ),
+                          SizedBox(width: 4),
+                          Text(
+                            "Visited Places",
+                            style: TextStyle(fontSize: 16),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-              ),
+                  ],
+                ),
               ),
             ]);
           } else {
