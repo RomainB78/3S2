@@ -25,7 +25,7 @@ class _PlanningPageState extends State<PlanningPage> {
         itemCount: itinerary.length,
         itemBuilder: (context, index) {
           return ListTile(
-            leading: Image.network(itinerary[index].assetPath ?? "", width: 50, height: 50),
+            leading: Image.network(itinerary[index].imagePath ?? "", width: 50, height: 50),
             title: Text(itinerary[index].nom),
             subtitle: Text(itinerary[index].localization.adress ?? "No address"),
           );

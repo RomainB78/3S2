@@ -2,7 +2,8 @@ import 'package:swipezone/repositories/location_repository.dart';
 import 'package:swipezone/repositories/models/categories.dart';
 import 'package:swipezone/repositories/models/localization.dart';
 import 'package:swipezone/repositories/models/location.dart';
-
+import 'dart:ui';
+import 'package:isar/isar.dart';
 class ILocationRepository implements LocationRepository {
   @override
   Future<List<Location>> getLocations() {
@@ -12,7 +13,8 @@ class ILocationRepository implements LocationRepository {
         "La Tour Eiffel est un monument emblématique de Paris, construit en 1889.",
         null,
         null,
-        "assets/tour_eiffel.jpg",
+        "assets/images/tour_eiffel.jpg",
+        null,
         Categories.Tower,
         null,
         Localization("Champ de Mars, 5 Avenue Anatole France, 75007 Paris",
@@ -23,7 +25,8 @@ class ILocationRepository implements LocationRepository {
         "Le Louvre est le plus grand musée d'art du monde, abritant la Joconde.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/Louvre_Museum_Wikimedia_Commons.jpg/2560px-Louvre_Museum_Wikimedia_Commons.jpg",
+        "assets/images/louvre.jpg",
+        null,
         Categories.Museum,
         null,
         Localization("Rue de Rivoli, 75001 Paris", 48.8606, 2.3376),
@@ -33,7 +36,8 @@ class ILocationRepository implements LocationRepository {
         "La cathédrale gothique Notre-Dame est située sur l'île de la Cité.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/a/af/Notre-Dame_de_Paris_2013-07-24.jpg/560px-Notre-Dame_de_Paris_2013-07-24.jpg",
+        "assets/images/notredame.jpg",
+        null,
         Categories.Church,
         null,
         Localization("6 Parvis Notre-Dame - Pl. Jean-Paul II, 75004 Paris",
@@ -44,7 +48,8 @@ class ILocationRepository implements LocationRepository {
         "Construit pour honorer les victoires de Napoléon, il est situé sur la place de l'Étoile.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Arc_de_Triomphe%2C_Paris_21_October_2010.jpg/560px-Arc_de_Triomphe%2C_Paris_21_October_2010.jpg",
+        "assets/images/arc.jpg",
+        null,
         Categories.HistoricalSite,
         null,
         Localization("Place Charles de Gaulle, 75008 Paris", 48.8738, 2.295),
@@ -54,7 +59,8 @@ class ILocationRepository implements LocationRepository {
         "La basilique du Sacré-Cœur est un symbole religieux de Montmartre.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Sacr%C3%A9_Coeur_Fa%C3%A7ade_1.jpg/560px-Sacr%C3%A9_Coeur_Fa%C3%A7ade_1.jpg",
+        "assets/images/sacre.jpg",
+        null,
         Categories.Church,
         null,
         Localization(
@@ -65,7 +71,8 @@ class ILocationRepository implements LocationRepository {
         "Le Panthéon est un mausolée pour les grandes figures françaises.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/5/56/Jielbeaumadier_pantheon_paris_2008.jpg/440px-Jielbeaumadier_pantheon_paris_2008.jpg",
+        "assets/images/pantheon.jpg",
+        null,
         Categories.HistoricalSite,
         null,
         Localization("Place du Panthéon, 75005 Paris", 48.8462, 2.3449),
@@ -75,7 +82,8 @@ class ILocationRepository implements LocationRepository {
         "La plus grande place de Paris, connue pour son obélisque et ses fontaines.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Place_de_la_Concorde_from_the_Eiffel_Tower%2C_Paris_April_2011.jpg/560px-Place_de_la_Concorde_from_the_Eiffel_Tower%2C_Paris_April_2011.jpg",
+        "assets/images/concorde.jpg",
+        null,
         Categories.HistoricalSite,
         null,
         Localization("Place de la Concorde, 75008 Paris", 48.8656, 2.3212),
@@ -85,17 +93,20 @@ class ILocationRepository implements LocationRepository {
         "L'Opéra Garnier est une somptueuse salle de spectacle datant du XIXe siècle.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Paris_Palais_Garnier_2010-04-06_16.55.07.jpg/620px-Paris_Palais_Garnier_2010-04-06_16.55.07.jpg",
+        'assets/images/garnier.jpg', // Utilisation d'un chemin d'image
+        null, // Pas de widget Image directement
         Categories.Museum,
         null,
         Localization("Place de l'Opéra, 75009 Paris", 48.8719, 2.3316),
       ),
+
       Location(
         "Jardin des Tuileries",
         "Le jardin des Tuileries est un jardin public historique situé près du Louvre.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d3/Jardin_des_Tuileries_-_panoramio_-_Javier_B.jpg/560px-Jardin_des_Tuileries_-_panoramio_-_Javier_B.jpg",
+        "assets/images/tuilerie.jpg",
+        null,
         Categories.Park,
         null,
         Localization("113 Rue de Rivoli, 75001 Paris", 48.8636, 2.3276),
@@ -105,7 +116,8 @@ class ILocationRepository implements LocationRepository {
         "Ce pont richement orné relie les Champs-Élysées et les Invalides.",
         null,
         null,
-        "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Alexandre_III%2C_bridge%2C_Exposition_Universal%2C_1900%2C_Paris%2C_France.jpg/660px-Alexandre_III%2C_bridge%2C_Exposition_Universal%2C_1900%2C_Paris%2C_France.jpg",
+        "assets/images/alexandre.jpg",
+        null,
         Categories.HistoricalSite,
         null,
         Localization("Pont Alexandre III, 75008 Paris", 48.8654, 2.3131),

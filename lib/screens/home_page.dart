@@ -36,71 +36,77 @@ class _HomePageState extends State<HomePage> {
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       "Il n'y a plus de lieux touristiques à afficher.",
-                      style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
                   ),
                 )
               else
-                LocationCard(location: _locationManager.locations[_locationManager.currentIndex]),
-              Center(
-                child: Row(
+                LocationCard(
+                  location: _locationManager.locations[_locationManager.currentIndex],
+                ),
+              if (!_noMoreLocations)
+                Center(
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _locationManager.Idontwant();
+                            _checkForMoreLocations();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(20),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset('assets/images/x.png', width: 70, height: 70),
+                        ),
+                      ),
+                      const SizedBox(width: 20),
+                      ElevatedButton(
+                        onPressed: () {
+                          setState(() {
+                            _locationManager.Iwant();
+                            _checkForMoreLocations();
+                          });
+                        },
+                        style: ElevatedButton.styleFrom(
+                          shape: const CircleBorder(),
+                          padding: const EdgeInsets.all(20),
+                        ),
+                        child: ClipOval(
+                          child: Image.asset('assets/images/heart.png', width: 70, height: 70),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              if (!_noMoreLocations)
+                const SizedBox(height: 10),
+              if (!_noMoreLocations)
+                Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
-                    ElevatedButton(
-                      onPressed: _noMoreLocations
-                          ? null
-                          : () {
-                        setState(() {
-                          _locationManager.Idontwant();
-                          _checkForMoreLocations();
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                      ),
-                      child: ClipOval(
-                        child: Image.asset('assets/x.png', width: 70, height: 70),
-                      ),
+                    Text(
+                      "${_locationManager.unwantedLocations.length}",
+                      style: const TextStyle(color: Colors.red, fontSize: 20),
                     ),
                     const SizedBox(width: 20),
-                    ElevatedButton(
-                      onPressed: _noMoreLocations
-                          ? null
-                          : () {
-                        setState(() {
-                          _locationManager.Iwant();
-                          _checkForMoreLocations();
-                        });
-                      },
-                      style: ElevatedButton.styleFrom(
-                        shape: const CircleBorder(),
-                        padding: const EdgeInsets.all(20),
-                      ),
-                      child: ClipOval(
-                        child: Image.asset('assets/heart.png', width: 70, height: 70),
-                      ),
+                    Text(
+                      "${_locationManager.filters.length}",
+                      style: const TextStyle(color: Colors.green, fontSize: 20),
                     ),
                   ],
                 ),
-              ),
-              const SizedBox(height: 10),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "${_locationManager.unwantedLocations.length}",
-                    style: const TextStyle(color: Colors.red, fontSize: 20),
-                  ),
-                  const SizedBox(width: 20),
-                  Text(
-                    "${_locationManager.filters.length}",
-                    style: const TextStyle(color: Colors.green, fontSize: 20),
-                  ),
-                ],
-              ),
               const SizedBox(height: 25),
-              Row(
+              Center(
+              child :Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   GestureDetector(
                     onTap: () {
@@ -109,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         const Icon(
-                          Icons.map_outlined, // Icône de carte par défaut dans Flutter
+                          Icons.map_outlined,
                           size: 40,
                           color: Colors.blue,
                         ),
@@ -129,7 +135,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         const Icon(
-                          Icons.nfc, // Icône de carte par défaut dans Flutter
+                          Icons.nfc,
                           size: 40,
                           color: Colors.blue,
                         ),
@@ -149,7 +155,7 @@ class _HomePageState extends State<HomePage> {
                     child: Column(
                       children: [
                         const Icon(
-                          Icons.place, // Icône de carte par défaut dans Flutter
+                          Icons.place,
                           size: 40,
                           color: Colors.blue,
                         ),
@@ -160,9 +166,9 @@ class _HomePageState extends State<HomePage> {
                         ),
                       ],
                     ),
-                  ),// Espacement entre les options
-
+                  ),
                 ],
+              ),
               ),
             ]);
           } else {
