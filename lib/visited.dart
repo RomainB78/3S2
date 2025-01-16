@@ -1,22 +1,23 @@
+
 import 'package:flutter/material.dart';
 
 class VisitedPlacesPage extends StatefulWidget {
   final String title;
-  const VisitedPlacesPage({super.key,required this.title});
+  const VisitedPlacesPage({super.key, required this.title});
 
   @override
   _VisitedPlacesPageState createState() => _VisitedPlacesPageState();
 }
 
 class _VisitedPlacesPageState extends State<VisitedPlacesPage> {
-  // Liste des lieux visités
   List<String> visitedPlaces = [];
 
-  // Méthode pour ajouter un lieu visité
   void addVisitedPlace(String place) {
-    setState(() {
-      visitedPlaces.add(place);
-    });
+    if (!visitedPlaces.contains(place)) {
+      setState(() {
+        visitedPlaces.add(place);
+      });
+    }
   }
 
   @override

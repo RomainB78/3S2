@@ -38,11 +38,11 @@ class _ItineraryPageState extends State<ItineraryPage> {
       body: Column(
         children: [
           Expanded(
-            flex: 2,
+            flex: 3,  // Réduit l'espace occupé par la liste
             child: ItineraryListView(itinerary: itinerary),
           ),
           Expanded(
-            flex: 5,
+            flex: 10, // Réduit la taille de la carte
             child: Stack(
               children: [
                 EnhancedFlutterMapView(
@@ -60,19 +60,28 @@ class _ItineraryPageState extends State<ItineraryPage> {
               ],
             ),
           ),
+
           Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            padding: const EdgeInsets.only(bottom: 50.0), // Ajuste la hauteur depuis le bas
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
               children: [
-                RecenterButton(onPressed: _recenterToParis),
-                ElevatedButton(
-                  onPressed: _launchURL,
-                  style: ElevatedButton.styleFrom(
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 12),
-                    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
-                  ),
-                  child: const Text('Google Maps'),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    Padding(
+                    padding: const EdgeInsets.only(right: 50.0),
+                    child : RecenterButton(onPressed: _recenterToParis),
+                    ),
+                    ElevatedButton(
+                      onPressed: _launchURL,
+                      style: ElevatedButton.styleFrom(
+                        padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                      ),
+                      child: const Text('Google Maps'),
+                    ),
+                  ],
                 ),
               ],
             ),
@@ -116,7 +125,7 @@ class ItineraryListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.separated(
-      padding: const EdgeInsets.symmetric(vertical: 8),
+      padding: const EdgeInsets.symmetric(vertical: 1),
       itemCount: itinerary.length,
       separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
@@ -287,3 +296,5 @@ class RecenterButton extends StatelessWidget {
     );
   }
 }
+
+

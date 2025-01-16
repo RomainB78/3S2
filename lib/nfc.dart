@@ -3,7 +3,12 @@ import 'package:nfc_manager/nfc_manager.dart';
 
 class NFCScanner extends StatefulWidget {
   final String title;
-  const NFCScanner({super.key,required this.title});
+  final Function(String) onAddVisitedPlace;
+  const NFCScanner({
+    super.key,
+    required this.title,
+    required this.onAddVisitedPlace,
+  });
 
   @override
   _NFCScannerState createState() => _NFCScannerState();
@@ -12,6 +17,7 @@ class NFCScanner extends StatefulWidget {
 class _NFCScannerState extends State<NFCScanner> {
   String _nfcData = 'No NFC tag detected';
   bool _isScanning = false;
+  List<String> scannedIds = [];
 
   @override
   void initState() {
@@ -21,8 +27,29 @@ class _NFCScannerState extends State<NFCScanner> {
 
   Future<void> _checkNFCAvailability() async {
     bool isAvailable = await NfcManager.instance.isAvailable();
-    setState(() {
-    });
+    if (!isAvailable) {
+      setState(() {
+        _nfcData = 'NFC non disponible sur cet appareil';
+      });
+    }
+  }
+
+  void _showPopup(String title, String content) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
+          content: Text(content, style: const TextStyle(fontSize: 18)),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.of(context).pop(),
+              child: const Text('OK'),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   void _startNFCScan() {
@@ -32,44 +59,38 @@ class _NFCScannerState extends State<NFCScanner> {
     });
 
     NfcManager.instance.startSession(onDiscovered: (NfcTag tag) async {
-      Map<String, dynamic> tagData = {};
+      String? tagId;
 
-      // Get tag ID
       if (tag.data.containsKey('nfca')) {
         final nfca = tag.data['nfca'];
         if (nfca != null && nfca['identifier'] != null) {
           final id = nfca['identifier'] as List<int>;
-          tagData['ID'] = id.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':');
+          tagId = id.map((e) => e.toRadixString(16).padLeft(2, '0')).join(':');
         }
       }
 
-      // Get NDEF data if available
-      if (tag.data.containsKey('ndef')) {
-        final ndef = tag.data['ndef'];
-        if (ndef != null && ndef['cachedMessage'] != null) {
-          final message = ndef['cachedMessage'];
-          if (message['records'] != null) {
-            final records = message['records'] as List;
-            tagData['NDEF Records'] = records.length.toString();
-
-            List<String> recordData = [];
-            for (var record in records) {
-              if (record['payload'] != null) {
-                String payload = String.fromCharCodes(record['payload']);
-                recordData.add(payload);
-              }
-            }
-            tagData['NDEF Content'] = recordData.join('\n');
+      if (tagId != null) {
+        if (scannedIds.contains(tagId)) {
+          _showPopup('NFC déjà scanné', 'Ce tag NFC a déjà été scanné.');
+        } else {
+          if (tagId == '04:94:83:72:2F:18:90') {
+            scannedIds.add(tagId);
+            widget.onAddVisitedPlace('Tour Eiffel');
+            _showPopup('Bravo !', 'Vous venez de visiter la Tour Eiffel !');
+          } else if (tagId == '14:D9:A4:95') {
+            scannedIds.add(tagId);
+            widget.onAddVisitedPlace('Panthéon');
+            _showPopup('Bravo !', 'Vous venez de visiter le Panthéon !');
+          } else {
+            _showPopup('Inconnu', 'Tag NFC non reconnu.');
           }
         }
       }
 
       setState(() {
-        _nfcData = tagData.entries.map((e) => '${e.key}: ${e.value}').join('\n');
         _isScanning = false;
       });
 
-      // Stop session after reading
       NfcManager.instance.stopSession();
     });
   }
@@ -95,38 +116,34 @@ class _NFCScannerState extends State<NFCScanner> {
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Column(
+              ElevatedButton(
+                onPressed: _isScanning ? _stopNFCScan : _startNFCScan,
+                child: Text(_isScanning ? 'Stop Scan' : 'Start Scan'),
+              ),
+              const SizedBox(height: 20),
+              Container(
+                padding: const EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  border: Border.all(color: Colors.grey),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Column(
                   children: [
-                    ElevatedButton(
-                      onPressed: _isScanning ? _stopNFCScan : _startNFCScan,
-                      child: Text(_isScanning ? 'Stop Scan' : 'Start Scan'),
+                    const Text(
+                      'NFC Tag Information:',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 16,
+                      ),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      padding: const EdgeInsets.all(16),
-                      decoration: BoxDecoration(
-                        border: Border.all(color: Colors.grey),
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Column(
-                        children: [
-                          const Text(
-                            'NFC Tag Information:',
-                            style: TextStyle(
-                              fontWeight: FontWeight.bold,
-                              fontSize: 16,
-                            ),
-                          ),
-                          const SizedBox(height: 10),
-                          Text(
-                            _nfcData,
-                            textAlign: TextAlign.center,
-                          ),
-                        ],
-                      ),
+                    const SizedBox(height: 10),
+                    Text(
+                      _nfcData,
+                      textAlign: TextAlign.center,
                     ),
                   ],
                 ),
+              ),
             ],
           ),
         ),
@@ -140,3 +157,4 @@ class _NFCScannerState extends State<NFCScanner> {
     super.dispose();
   }
 }
+

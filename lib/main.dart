@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:swipezone/screens/home_page.dart';
@@ -52,8 +53,17 @@ final GoRouter _router = GoRouter(
         ),
         GoRoute(
           path: 'NFCScanner',
-          builder: (context, state) => const NFCScanner(title: 'Tags NFC'),
+          builder: (context, state) => NFCScanner(
+            title: 'Tags NFC',
+            onAddVisitedPlace: (place) {
+              // Ajoutez ici la logique pour gérer les lieux visités
+              if (kDebugMode) {
+                print('Lieu visité : $place');
+              }
+            },
+          ),
         ),
+
         GoRoute(
           path: 'VisitedPlacesPage',
           builder: (context, state) => const VisitedPlacesPage(title: 'Lieux Visités'),
