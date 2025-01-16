@@ -13,6 +13,8 @@ void main() {
   runApp(const MyApp());
 }
 
+final List<String> visitedPlaces = [];
+
 final GoRouter _router = GoRouter(
   initialLocation: '/splash', // Démarre par le SplashScreen
   routes: [
@@ -56,17 +58,19 @@ final GoRouter _router = GoRouter(
           builder: (context, state) => NFCScanner(
             title: 'Tags NFC',
             onAddVisitedPlace: (place) {
-              // Ajoutez ici la logique pour gérer les lieux visités
+              visitedPlaces.add(place); // Ajoute le lieu à la liste partagée
               if (kDebugMode) {
-                print('Lieu visité : $place');
+                print('Lieu visité ajouté : $place');
               }
             },
           ),
         ),
-
         GoRoute(
           path: 'VisitedPlacesPage',
-          builder: (context, state) => const VisitedPlacesPage(title: 'Lieux Visités'),
+          builder: (context, state) => VisitedPlacesPage(
+            title: 'Lieux Visités',
+            visitedPlaces: visitedPlaces, // Passe la liste partagée
+          ),
         ),
       ],
     ),
