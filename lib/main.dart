@@ -5,7 +5,7 @@ import 'package:swipezone/screens/home_page.dart';
 import 'package:swipezone/screens/planning_page.dart';
 import 'package:swipezone/screens/select_page.dart';
 import 'package:swipezone/screens/itinerary_page.dart';
-import 'package:swipezone/screens/splash_screen.dart';
+import 'package:swipezone/splash_screen.dart';
 import 'package:swipezone/nfc.dart';
 import 'package:swipezone/visited.dart';
 

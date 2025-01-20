@@ -85,22 +85,28 @@ class _NFCScannerState extends State<NFCScanner> {
   }
 
   void _showPopup(String title, String content) {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
-          content: Text(content, style: const TextStyle(fontSize: 18)),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: const Text('OK'),
-            ),
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.emoji_events, color: Colors.amber, size: 32),  // Icône de trophée
+            const SizedBox(width: 10),
+            Text(title, style: const TextStyle(fontSize: 24, fontWeight: FontWeight.bold)),
           ],
-        );
-      },
-    );
-  }
+        ),
+        content: Text(content, style: const TextStyle(fontSize: 18)),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(context).pop(),
+            child: const Text('OK'),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   @override
   Widget build(BuildContext context) {
@@ -117,7 +123,19 @@ class _NFCScannerState extends State<NFCScanner> {
             children: [
               ElevatedButton(
                 onPressed: _isScanning ? _stopNFCScan : _startNFCScan,
-                child: Text(_isScanning ? 'Stop Scan' : 'Start Scan'),
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: _isScanning ? Colors.red : Colors.green,
+                  padding: const EdgeInsets.symmetric(horizontal: 40, vertical: 15),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(_isScanning ? Icons.stop : Icons.nfc, color: Colors.white),
+                    const SizedBox(width: 10),
+                    Text(_isScanning ? 'Stop Scan' : 'Start Scan', style: const TextStyle(color: Colors.white)),
+                  ],
+                ),
               ),
               const SizedBox(height: 20),
               Container(

@@ -63,8 +63,23 @@ class _HomePageState extends State<HomePage> {
                           shape: const CircleBorder(),
                           padding: const EdgeInsets.all(20),
                         ),
-                        child: ClipOval(
-                          child: Image.asset('assets/images/x.png', width: 70, height: 70),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 3, // Légère translation vers le bas
+                              left: 3, // Légère translation vers la droite
+                              child: Icon(
+                                Icons.close, 
+                                size: 70,  
+                                color: const Color.fromARGB(255, 0, 0, 0).withOpacity(0.2),  // Ombre légère en noir
+                              ),
+                            ),
+                            Icon(
+                              Icons.close, 
+                              size: 70,  
+                              color: const Color.fromARGB(255, 22, 63, 138),  // Couleur principale
+                            ),
+                          ],
                         ),
                       ),
                       const SizedBox(width: 20),
@@ -79,8 +94,23 @@ class _HomePageState extends State<HomePage> {
                           shape: const CircleBorder(),
                           padding: const EdgeInsets.all(20),
                         ),
-                        child: ClipOval(
-                          child: Image.asset('assets/images/heart.png', width: 70, height: 70),
+                        child: Stack(
+                          children: [
+                            Positioned(
+                              top: 3, // Légère translation vers le bas
+                              right: 3, // Légère translation vers la gauche
+                              child: Icon(
+                                Icons.favorite, 
+                                size: 70,  
+                                color: Colors.black.withOpacity(0.2),  // Ombre légère en noir
+                              ),
+                            ),
+                            Icon(
+                              Icons.favorite, 
+                              size: 70,  
+                              color: const Color.fromARGB(255, 255, 114, 161),  // Couleur rose
+                            ),
+                          ],
                         ),
                       ),
                     ],
