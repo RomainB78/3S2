@@ -52,6 +52,11 @@ Avant d'installer et d'exécuter l'application, assurez-vous d'avoir installé :
 - [Codelabs Flutter](https://docs.flutter.dev/get-started/codelab)
 - [Exemples et Cookbook Flutter](https://docs.flutter.dev/cookbook)
 
+## Équipe de Développement
+
+Projet réalisé en dernière année du cycle ingénieur - ESME Majeure Systèmes Embarqués 3S2 Promo 2025
+
+
 ## Contributions
 
 Les contributions sont les bienvenues ! Pour proposer des améliorations :
